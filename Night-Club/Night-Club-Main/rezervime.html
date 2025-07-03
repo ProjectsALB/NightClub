@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rezervo tavoline</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-image: url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701267700.jpg');
+      font-family: Garamond, serif;
+    }
+    .rezervim {
+      width: auto;
+      height: auto;
+      color: white;
+      border-radius: 20px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      position: center;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0);
+      padding: 20px;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      background-color: rgba(51, 51, 51, 0.7);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0px;
+      border-radius: 22px;
+      box-shadow: 2px 2px 2px rgba(0,0,0,3);
+      margin-left: 0;
+    }
+    nav ul li a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      padding: 20px;
+      border-radius: 20px;
+    }
+    nav ul li a:hover {
+      transition: 0.25s;
+      background:#f073fd;
+      color: white;
+    }
+    .logo {
+      position: relative;
+      width: 125px;
+      height: 125px;
+      background-image: url('stdLogo.jog-removebg-preview.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-left: 35px;
+      color: white;
+    }
+    form {
+      display: flex;
+      box-sizing: border-box;
+      padding: 40px;
+      width: 50%;
+      margin: auto;
+      backdrop-filter: brightness(40%);
+      flex-direction: column;
+      border-radius: 50px;
+      margin-top: 82px;
+    }
+    h4 {
+      font-family: Garamond, serif;
+      font-weight: normal;
+      font-size: 40px;
+      text-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+      margin-bottom: 40px;
+      text-align: center;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+    label {
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      font-size: 15px;
+      letter-spacing: 2px;
+      padding-left: 10px;
+    }
+    input {
+      background: rgba(255,255,255,0.3);
+      height: 40px;
+      line-height: 40px;
+      border-radius: 20px;
+      padding: 0px 20px;
+      border: none;
+      margin-bottom: 20px;
+      color: white;
+    }
+    button, input[type="submit"] {
+      background: rgb(45, 126, 231);
+      height: 40px;
+      line-height: 40px;
+      border-radius: 40px;
+      border: none;
+      margin: 10px 0px;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      color: white;
+    }
+    select {
+      height: 30px;
+      width: auto;
+      background-color:rgb(255,255,255);
+      font-size: larger;
+      font-family: Garamond, serif;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"></div>
+    <nav>
+      <ul>
+        <li><a href="home.html">HOME</a></li>
+        <li><a href="club.html">CLUB</a></li>
+        <li><a href="evente.html">EVENTE</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="rezervim">
+    <form id="reservationForm">
+      <h4>Rezervimet</h4>
+
+      <label for="Emer">Emer :</label>
+      <input type="text" id="Emer" name="Emer" placeholder="John Doe" required><br>
+
+      <label for="mbiemer">Mbiemer:</label>
+      <input type="text" id="mbiemer" name="mbiemer" placeholder="Doe" required><br>
+
+      <label for="Email">Email:</label>
+      <input type="email" id="Email" name="Email" placeholder="example@example.com" required><br>
+
+      <label for="Mosha">Mosha:</label>
+      <input type="number" id="Mosha" name="Mosha" placeholder="18+" min="18" required><br>
+
+      <label for="Numri">Numri:</label>
+      <input type="tel" id="Numri" name="Numri" placeholder="06XXXXXXXX" required><br>
+
+      <label for="Eventet">Eventet:</label>
+      <input type="date" id="Eventet" name="Eventet"><br>
+
+      <label for="Biletat">Biletat:</label>
+      <input type="text" id="Biletat" name="Biletat" placeholder="Basic,Gold,Premium"><br><br>
+
+      <input type="submit" value="Rezervo">
+    </form>
+  </div>
+
+  <script>
+     const form = document.getElementById('reservationForm');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        // Shfaq mesazhet si alert
+        if (response.ok) {
+            alert(result.message); // Shfaq mesazhin e suksesit
+            form.reset();
+        } else {
+            alert(result.error); // Shfaq mesazhin e gabimit
+        }
+    } catch (err) {
+        console.log("Gabim në dërgimin e të dhënave:", err);
+        alert('Gabim gjatë dërgimit të të dhënave.'); // Shfaq gabim në catch
+    }
+});
+</script>
+</body>
+</html>
