@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rezervo tavolinë</title>
+
+  <style>
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    body {
+      background: url('https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701267700.jpg') no-repeat center center/cover;
+      font-family: 'Garamond', serif;
+      color: white;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      color: #fff;
+      padding: 15px 30px;
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      width: 80px; 
+      height: 80px;
+      background: url('images/stdLogo.jog-removebg-preview.png') no-repeat center/contain;
+    }
+
+    /* Language Switcher */
+    .language-switcher {
+      display: flex;
+      gap: 8px;
+      margin-left: 20px;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .lang-btn:hover {
+      background: rgba(240, 115, 253, 0.3);
+      border-color: #f073fd;
+    }
+
+    .lang-btn.active {
+      background: #f073fd;
+      border-color: #f073fd;
+    }
+
+    /* Desktop Navigation */
+    nav.desktop ul { 
+      list-style: none; 
+      display: flex; 
+      gap: 15px; 
+      align-items: center;
+    }
+    
+    nav.desktop ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 15px;
+      transition: 0.3s ease;
+    }
+    
+    nav.desktop ul li a:hover { 
+      background: #f073fd; 
+      color: white; 
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle { 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      display: none; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      width: 28px; 
+      height: 22px; 
+    }
+    
+    .menu-toggle span { 
+      display: block; 
+      width: 100%; 
+      height: 3px; 
+      background: white; 
+      border-radius: 2px; 
+      transition: 0.3s; 
+    }
+
+    .menu-toggle.active span:nth-child(1) { 
+      transform: rotate(45deg) translateY(8px); 
+    }
+    
+    .menu-toggle.active span:nth-child(2) { 
+      opacity: 0; 
+    }
+    
+    .menu-toggle.active span:nth-child(3) { 
+      transform: rotate(-45deg) translateY(-8px); 
+    }
+
+    /* Mobile Navigation */
+    nav.mobile { 
+      position: absolute; 
+      top: 100%; 
+      right: 25px; 
+      background: rgba(0, 0, 0, 0.95); 
+      border-radius: 12px; 
+      overflow: hidden; 
+      transform: translateY(-10px); 
+      opacity: 0; 
+      pointer-events: none; 
+      transition: all 0.3s ease; 
+      z-index: 1001;
+    }
+    
+    nav.mobile.active { 
+      opacity: 1; 
+      transform: translateY(0); 
+      pointer-events: auto; 
+    }
+    
+    nav.mobile ul { 
+      list-style: none; 
+      display: flex; 
+      flex-direction: column; 
+      width: 200px; 
+    }
+    
+    nav.mobile ul li a { 
+      color: white; 
+      text-decoration: none; 
+      padding: 12px 20px; 
+      display: block; 
+      transition: 0.3s; 
+      font-size: 13px; 
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    nav.mobile ul li:last-child a {
+      border-bottom: none;
+    }
+    
+    nav.mobile ul li a:hover { 
+      background: #f073fd; 
+    }
+
+    .mobile-language {
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 550px;
+      background: rgba(0, 0, 0, 0.7);
+      margin: 160px auto 60px auto;
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    h4 { 
+      text-align: center; 
+      font-size: 36px; 
+      color: #f073fd; 
+      margin-bottom: 30px; 
+      text-transform: uppercase; 
+      letter-spacing: 1px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label { 
+      font-size: 15px; 
+      margin-bottom: 8px; 
+      letter-spacing: 1px; 
+      display: block;
+      font-weight: 600;
+    }
+
+    input, select {
+      background: rgba(255, 255, 255, 0.25);
+      border: none;
+      border-radius: 20px;
+      padding: 12px 15px;
+      color: white;
+      font-size: 16px;
+      transition: 0.3s;
+      outline: none;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    input:focus, select:focus { 
+      background: rgba(255, 255, 255, 0.4); 
+      box-shadow: 0 0 8px rgba(240, 115, 253, 0.6);
+      border-color: #f073fd;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    select option {
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 10px;
+    }
+
+    .btn-submit {
+      background: #f073fd;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 25px;
+      border: none;
+      padding: 15px 30px;
+      transition: 0.3s;
+      width: 100%;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover { 
+      background: #d85dc5; 
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(240, 115, 253, 0.4);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 15px 0;
+      padding: 10px;
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid #f073fd;
+      width: 25px;
+      height: 25px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Messages */
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      text-align: center;
+      display: none;
+      font-weight: 600;
+    }
+
+    .message.success {
+      background: rgba(46, 204, 113, 0.2);
+      border: 1px solid #2ecc71;
+      color: #2ecc71;
+    }
+
+    .message.error {
+      background: rgba(231, 76, 60, 0.2);
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+    }
+
+    /* ===== Responsive Design ===== */
+
+    /* Tablets */
+    @media (max-width: 1024px) { 
+      nav.desktop { 
+        display: none; 
+      } 
+      
+      .menu-toggle { 
+        display: flex; 
+      } 
+
+      .form-container {
+        margin-top: 140px;
+        padding: 35px;
+      }
+    }
+
+    /* Small Tablets */
+    @media (max-width: 768px) { 
+      header {
+        padding: 12px 20px;
+      }
+      
+      .form-container { 
+        width: 90%; 
+        padding: 30px; 
+        margin-top: 130px; 
+      } 
+      
+      .logo { 
+        width: 70px; 
+        height: 70px; 
+      }
+      
+      h4 {
+        font-size: 32px;
+      }
+      
+      nav.mobile {
+        right: 20px;
+      }
+    }
+
+    /* Mobile Phones */
+    @media (max-width: 480px) {
+      header {
+        padding: 10px 15px;
+      }
+      
+      .form-container {
+        padding: 25px 20px;
+        margin-top: 120px;
+        border-radius: 20px;
+      }
+      
+      h4 {
+        font-size: 28px;
+        margin-bottom: 25px;
+      }
+      
+      .form-group {
+        margin-bottom: 15px;
+      }
+      
+      input, select {
+        padding: 10px 12px;
+        font-size: 15px;
+      }
+      
+      .btn-submit {
+        padding: 12px 25px;
+        font-size: 16px;
+      }
+      
+      .logo {
+        width: 60px;
+        height: 60px;
+      }
+      
+      nav.mobile {
+        right: 15px;
+        width: 180px;
+      }
+      
+      nav.mobile ul {
+        width: 100%;
+      }
+      
+      .language-switcher {
+        margin-left: 10px;
+      }
+      
+      .lang-btn {
+        padding: 5px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Small Phones */
+    @media (max-width: 360px) {
+      .form-container {
+        width: 95%;
+        padding: 20px 15px;
+        margin-top: 110px;
+      }
+      
+      h4 {
+        font-size: 24px;
+      }
+      
+      header {
+        padding: 8px 10px;
+      }
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+      }
+      
+      nav.mobile {
+        right: 10px;
+        width: 160px;
+      }
+      
+      nav.mobile ul li a {
+        padding: 10px 15px;
+        font-size: 12px;
+      }
+      
+      .mobile-language {
+        padding: 10px 15px;
+      }
+    }
+
+    /* High-resolution displays */
+    @media (min-width: 1400px) {
+      .form-container {
+        max-width: 600px;
+        padding: 50px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      header, .btn-submit, .loading {
+        display: none;
+      }
+      
+      .form-container {
+        background: white;
+        color: black;
+        box-shadow: none;
+        margin: 20px auto;
+      }
+      
+      input, select {
+        background: white;
+        color: black;
+        border: 1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo"></div>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop">
+      <ul>
+        <li><a href="home.html" data-en="HOME" data-sq="KRYEFAQJA">HOME</a></li>
+        <li><a href="club.html" data-en="CLUB" data-sq="KLUBI">CLUB</a></li>
+        <li><a href="evente.html" data-en="EVENTS" data-sq="EVENTE">EVENTS</a></li>
+        <li class="language-switcher">
+          <button class="lang-btn" id="langEn">EN</button>
+          <button class="lang-btn" id="langSq">SQ</button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile" id="navMenu">
+      <ul>
+        <li><a href="home.html" data-en="HOME" data-sq="KRYEFAQJA">HOME</a></li>
+        <li><a href="club.html" data-en="CLUB" data-sq="KLUBI">CLUB</a></li>
+        <li><a href="evente.html" data-en="EVENTS" data-sq="EVENTE">EVENTS</a></li>
+        <li class="mobile-language">
+          <button class="lang-btn" id="langEnMobile">EN</button>
+          <button class="lang-btn" id="langSqMobile">SQ</button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="form-container">
+    <form id="reservationForm">
+      <h4 data-en="RESERVATIONS" data-sq="REZERVIMET">REZERVIMET</h4>
+      
+      <div id="successMessage" class="message success"></div>
+      <div id="errorMessage" class="message error"></div>
+
+      <div class="form-group">
+        <label for="Emer" data-en="First Name:" data-sq="Emër:">Emër:</label>
+        <input type="text" id="Emer" name="Emer" placeholder="Shkruani emrin tuaj" data-en-placeholder="Enter your first name" data-sq-placeholder="Shkruani emrin tuaj" required>
+      </div>
+
+      <div class="form-group">
+        <label for="mbiemer" data-en="Last Name:" data-sq="Mbiemër:">Mbiemër:</label>
+        <input type="text" id="mbiemer" name="mbiemer" placeholder="Shkruani mbiemrin tuaj" data-en-placeholder="Enter your last name" data-sq-placeholder="Shkruani mbiemrin tuaj" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Email" data-en="Email:" data-sq="Email:">Email:</label>
+        <input type="email" id="Email" name="Email" placeholder="example@email.com" data-en-placeholder="example@email.com" data-sq-placeholder="example@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Mosha" data-en="Age:" data-sq="Mosha:">Mosha:</label>
+        <input type="number" id="Mosha" name="Mosha" min="18" max="100" placeholder="18+" data-en-placeholder="18+" data-sq-placeholder="18+" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Numri" data-en="Phone Number:" data-sq="Numri i telefonit:">Numri i telefonit:</label>
+        <input type="tel" id="Numri" name="Numri" placeholder="+355 XX XXX XXXX" data-en-placeholder="+355 XX XXX XXXX" data-sq-placeholder="+355 XX XXX XXXX" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Eventet" data-en="Event Date:" data-sq="Data e eventit:">Data e eventit:</label>
+        <input type="date" id="Eventet" name="Eventet" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Biletat" data-en="Ticket Type:" data-sq="Lloji i biletës:">Lloji i biletës:</label>
+        <select id="Biletat" name="Biletat" required>
+          <option value="" data-en="Select ticket type" data-sq="Zgjidhni llojin e biletës">Zgjidhni llojin e biletës</option>
+          <option value="STANDARD" data-en="Standard - 20€" data-sq="Standard - 20€">Standard - 20€</option>
+          <option value="VIP" data-en="VIP - 50€" data-sq="VIP - 50€">VIP - 50€</option>
+          <option value="VVIP" data-en="VVIP - 100€" data-sq="VVIP - 100€">VVIP - 100€</option>
+          <option value="TABLE" data-en="Table - 200€" data-sq="Tavolinë - 200€">Tavolinë - 200€</option>
+        </select>
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <span data-en="Processing reservation..." data-sq="Duke procesuar rezervimin...">Duke procesuar rezervimin...</span>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn" data-en="RESERVE" data-sq="REZERVO">
+        REZERVO
+      </button>
+    </form>
+  </div>
+
+  <script>
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('header')) {
+        menuToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      }
+    });
+
+    // Language switching functionality
+    const langEn = document.getElementById('langEn');
+    const langSq = document.getElementById('langSq');
+    const langEnMobile = document.getElementById('langEnMobile');
+    const langSqMobile = document.getElementById('langSqMobile');
+
+    // Set initial language
+    let currentLanguage = 'sq';
+    langSq.classList.add('active');
+    langSqMobile.classList.add('active');
+
+    function switchLanguage(lang) {
+      currentLanguage = lang;
+      
+      // Update button states
+      if (lang === 'en') {
+        langEn.classList.add('active');
+        langSq.classList.remove('active');
+        langEnMobile.classList.add('active');
+        langSqMobile.classList.remove('active');
+      } else {
+        langSq.classList.add('active');
+        langEn.classList.remove('active');
+        langSqMobile.classList.add('active');
+        langEnMobile.classList.remove('active');
+      }
+
+      // Update all translatable elements
+      updatePageLanguage(lang);
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+
+      // Save preference to localStorage
+      localStorage.setItem('preferredLanguage', lang);
+    }
+
+    function updatePageLanguage(lang) {
+      // Update elements with data attributes
+      const elementsToTranslate = document.querySelectorAll('[data-en], [data-sq]');
+      
+      elementsToTranslate.forEach(element => {
+        if (lang === 'en') {
+          if (element.hasAttribute('data-en')) {
+            if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN' || element.tagName === 'OPTION' || element.tagName === 'LABEL') {
+              element.textContent = element.getAttribute('data-en');
+            } else {
+              element.innerHTML = element.getAttribute('data-en');
+            }
+          }
+          // Update placeholders
+          if (element.hasAttribute('data-en-placeholder')) {
+            element.setAttribute('placeholder', element.getAttribute('data-en-placeholder'));
+          }
+        } else {
+          if (element.hasAttribute('data-sq')) {
+            if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN' || element.tagName === 'OPTION' || element.tagName === 'LABEL') {
+              element.textContent = element.getAttribute('data-sq');
+            } else {
+              element.innerHTML = element.getAttribute('data-sq');
+            }
+          }
+          // Update placeholders
+          if (element.hasAttribute('data-sq-placeholder')) {
+            element.setAttribute('placeholder', element.getAttribute('data-sq-placeholder'));
+          }
+        }
+      });
+
+      // Update page title
+      if (lang === 'en') {
+        document.title = 'Reserve Table - Night Club';
+      } else {
+        document.title = 'Rezervo Tavolinë - Night Club';
+      }
+    }
+
+    // Event listeners for language buttons
+    langEn.addEventListener('click', () => switchLanguage('en'));
+    langSq.addEventListener('click', () => switchLanguage('sq'));
+    langEnMobile.addEventListener('click', () => {
+      switchLanguage('en');
+      menuToggle.classList.remove('active');
+      navMenu.classList.remove('active');
+    });
+    langSqMobile.addEventListener('click', () => {
+      switchLanguage('sq');
+      menuToggle.classList.remove('active');
+      navMenu.classList.remove('active');
+    });
+
+    // Load saved language preference
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLanguage = localStorage.getItem('preferredLanguage');
+      if (savedLanguage) {
+        switchLanguage(savedLanguage);
+      }
+    });
+
+    // Form handling
+    const form = document.getElementById('reservationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loading = document.getElementById('loading');
+    const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('Eventet').min = today;
+
+    // Hide messages
+    function hideMessages() {
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+    }
+
+    // Show message
+    function showMessage(element, message) {
+      hideMessages();
+      element.textContent = message;
+      element.style.display = 'block';
+    }
+
+    // Validate form
+    function validateForm(data) {
+      const errors = [];
+
+      if (data.Emer.length < 2) {
+        errors.push(currentLanguage === 'en' ? 'First name must be at least 2 characters' : 'Emri duhet të jetë së paku 2 shkronja');
+      }
+
+      if (data.mbiemer.length < 2) {
+        errors.push(currentLanguage === 'en' ? 'Last name must be at least 2 characters' : 'Mbiemri duhet të jetë së paku 2 shkronja');
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.Email)) {
+        errors.push(currentLanguage === 'en' ? 'Email is not valid' : 'Email-i nuk është valid');
+      }
+
+      if (data.Mosha < 18) {
+        errors.push(currentLanguage === 'en' ? 'You must be at least 18 years old' : 'Duhet të jeni të paktën 18 vjeç');
+      }
+
+      if (!/^\+?[\d\s-]{10,}$/.test(data.Numri)) {
+        errors.push(currentLanguage === 'en' ? 'Phone number is not valid' : 'Numri i telefonit nuk është valid');
+      }
+
+      const eventDate = new Date(data.Eventet);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (eventDate < today) {
+        errors.push(currentLanguage === 'en' ? 'Event date cannot be in the past' : 'Data e eventit nuk mund të jetë në të shkuarën');
+      }
+
+      if (!data.Biletat) {
+        errors.push(currentLanguage === 'en' ? 'Please select ticket type' : 'Ju lutem zgjidhni llojin e biletës');
+      }
+
+      return errors;
+    }
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Validate form
+      const errors = validateForm(data);
+      if (errors.length > 0) {
+        showMessage(errorMessage, errors.join(', '));
+        return;
+      }
+
+      // Show loading state
+      submitBtn.disabled = true;
+      loading.style.display = 'block';
+      hideMessages();
+
+      try {
+        const response = await fetch('http://localhost:3000/api/rezervime', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          const successMsg = currentLanguage === 'en' 
+            ? '✅ Reservation saved successfully! You will receive a confirmation email.' 
+            : '✅ Rezervimi u ruajt me sukses! Do të merrni një email konfirmimi.';
+          showMessage(successMessage, successMsg);
+          form.reset();
+          
+          // Reset min date
+          document.getElementById('Eventet').min = today;
+        } else {
+          const errorMsg = currentLanguage === 'en'
+            ? '❌ ' + (result.error || 'Something went wrong. Please try again.')
+            : '❌ ' + (result.error || 'Diçka shkoi keq. Ju lutem provoni përsëri.');
+          showMessage(errorMessage, errorMsg);
+        }
+      } catch (err) {
+        console.error('Connection error:', err);
+        const errorMsg = currentLanguage === 'en'
+          ? '❌ Error connecting to server. Please check your internet connection.'
+          : '❌ Gabim gjatë lidhjes me serverin. Ju lutem kontrolloni lidhjen tuaj të internetit.';
+        showMessage(errorMessage, errorMsg);
+      } finally {
+        // Hide loading state
+        submitBtn.disabled = false;
+        loading.style.display = 'none';
+      }
+    });
+
+    // Real-time validation
+    form.addEventListener('input', (e) => {
+      if (e.target.type !== 'submit') {
+        hideMessages();
+      }
+    });
+
+    // Phone number formatting
+    document.getElementById('Numri').addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.startsWith('355')) {
+        value = '+' + value;
+      } else if (!value.startsWith('+') && value.length > 0) {
+        value = '+355' + value;
+      }
+      e.target.value = value;
+    });
+
+    // Age validation on input
+    document.getElementById('Mosha').addEventListener('input', function(e) {
+      if (e.target.value < 18) {
+        const errorMsg = currentLanguage === 'en' 
+          ? 'You must be at least 18 years old' 
+          : 'Duhet të jeni të paktën 18 vjeç';
+        e.target.setCustomValidity(errorMsg);
+      } else {
+        e.target.setCustomValidity('');
+      }
+    });
+
+    // Update age validation when language changes
+    document.addEventListener('languageChanged', () => {
+      const ageInput = document.getElementById('Mosha');
+      if (ageInput.value < 18) {
+        const errorMsg = currentLanguage === 'en' 
+          ? 'You must be at least 18 years old' 
+          : 'Duhet të jeni të paktën 18 vjeç';
+        ageInput.setCustomValidity(errorMsg);
+      }
+    });
+  </script>
+</body>
+</html>

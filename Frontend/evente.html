@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>The Club</title>
+    <style>
+        body {
+            background-image: url('images/clubBACK.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: black;
+            font-family: Garamond, serif;
+            line-height: 1.6;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h1, h2, p, ul, li {
+            margin: 0;
+            padding: 0;
+            color: black;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            color: #fff;
+            padding: 20px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header img {
+            height: 40px;
+            margin-left: 20px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin-right: 20px;
+        }
+
+        header nav ul li {
+            margin-right: 15px;
+        }
+
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        header nav ul li a:hover {
+            background: #380ec3;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            gap: 8px;
+            margin-left: 20px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-btn:hover {
+            background: rgba(240, 115, 253, 0.3);
+            border-color: #f073fd;
+        }
+
+        .lang-btn.active {
+            background: #f073fd;
+            border-color: #f073fd;
+        }
+
+        main {
+            padding-top: 120px;
+        }
+
+        .container1 {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .container1 section {
+            width: 24%;
+            margin-bottom: 20px;
+            background-color: transparent;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(151, 18, 102, 0.1);
+            box-sizing: border-box;
+        }
+
+        .container1 section img {
+            width: 100%;
+            height: 60%;
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
+
+        .container1 section div {
+            text-align: center;
+        }
+
+        .container1 section h1, .container1 section h2 {
+            margin-bottom: 10px;
+            color: #fff;
+            font-family: "Montserrat", Sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .container1 section p {
+            color: #bab9b9;
+            font-family: "Montserrat", Sans-serif;
+        }
+
+        .dj h1{
+            color: #fff;
+        }
+         .dj p {
+            color: #fff;
+            font-size: 22px;
+        }
+
+        * {box-sizing:border-box}
+
+        .slideshow-container {
+          max-width: 1000px;
+          position: relative;
+          margin: auto;
+        }
+
+        .mySlides {
+          display: none;
+        }
+
+        .prev, .next {
+          cursor: pointer;
+          position: absolute;
+          top: 50%;
+          width: auto;
+          margin-top: -22px;
+          padding: 16px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          transition: 0.6s ease;
+          border-radius: 0 3px 3px 0;
+          user-select: none;
+        }
+
+        .next {
+          right: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+          background-color: rgba(0,0,0,0.8);
+        }
+
+        .dot {
+          cursor: pointer;
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+          background-color: #717171;
+        }
+
+        .fade {
+          animation-name: fade;
+          animation-duration: 0.3s;
+        }
+
+        @keyframes fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .prev{
+            left: 0;
+          border-radius: 3px 0 0 3px;
+        }
+
+        footer {
+        background-color: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 40px 0;
+        }
+
+        .footer-column {
+            flex-basis: 30%;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+        }
+
+        .footer-column p{
+          font-weight: bold;
+        }
+        .footer-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+           
+        }
+        .footer-column ul li a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: red;
+        }
+
+        footer .dateTime {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            header nav ul {
+                flex-wrap: wrap;
+            }
+            
+            .language-switcher {
+                margin-left: 10px;
+            }
+            
+            .lang-btn {
+                padding: 4px 8px;
+                font-size: 0.7rem;
+            }
+            
+            .container1 section {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container1 section {
+                width: 100%;
+            }
+            
+            header nav ul li {
+                margin-right: 8px;
+            }
+            
+            header nav ul li a {
+                padding: 6px;
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="images/stdLogo.jog-removebg-preview.png" alt="Eventet Logo">
+    <nav>
+        <ul>
+            <li><a href="home.html" data-en="HOME" data-sq="KRYEFAQJA">HOME</a></li>
+            <li><a href="evente.html" data-en="EVENTS" data-sq="EVENTE">EVENTS</a></li>
+            <li><a href="rezervime.html" data-en="RESERVATIONS" data-sq="REZERVIME">RESERVATIONS</a></li>
+            <li class="language-switcher">
+                <button class="lang-btn" id="langEn">EN</button>
+                <button class="lang-btn" id="langSq">SQ</button>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="container1">
+        <section>
+            <img src="images/mainRoom.jpg" alt="Main Room">
+            <div>
+                <h1 data-en="The Main Room" data-sq="Dhoma Kryesore">The Main Room</h1>
+                <p data-en="An amazing dance floor beckons, and the finest DJs spin tunes that keep everyone on their feet." data-sq="Një parket i mrekullueshëm ju fton, dhe DJ-të më të mirë këndojnë muzikë që i mban të gjithë në këmbë.">An amazing dance floor beckons, and the finest DJs spin tunes that keep everyone on their feet.</p>
+            </div>
+        </section>
+
+        <section>
+            <img src="images/ClubRoom.jpg" alt="Down Room">
+            <div>
+                <h1 data-en="The Down Room" data-sq="Dhoma e Poshtme">The Down Room</h1>
+                <p data-en="The ideal VIP spot offers easy access to both the dance floor and a stylish terrace. Perfectly located, it provides a clear viewport of the venue, allowing VIP guests to enjoy the atmosphere combined with the degree of privacy that makes it extra special." data-sq="Vendi ideal VIP ofron qasje të lehtë si në parket ashtu edhe në një tarracë elegante. E vendosur në mënyrë perfekte, ofron një pamje të qartë të vendit, duke i lejuar mysafirët VIP të shijojnë atmosferën e kombinuar me shkallën e privatësisë që e bën atë veçanërisht të veçantë.">The ideal VIP spot offers easy access to both the dance floor and a stylish terrace. Perfectly located, it provides a clear viewport of the venue, allowing VIP guests to enjoy the atmosphere combined with the degree of privacy that makes it extra special.</p>
+            </div>
+        </section>
+
+        <section>
+            <img src="images/cave.jpg" alt="Cave">
+            <div>
+                <h1 data-en="The Cave" data-sq="Shpella">The Cave</h1>
+                <p data-en="With its lower ceilings and an underground DJ booth, The Cave offers a unique setting for those seeking a more intimate vibe." data-sq="Me tavanet e saj më të ulëta dhe një kabinë DJ nëntokësore, Shpella ofron një ambient unik për ata që kërkojnë një atmosferë më intime.">With its lower ceilings and an underground DJ booth, The Cave offers a unique setting for those seeking a more intimate vibe.</p>
+            </div>
+        </section>
+
+        <section>
+            <img src="images/tarr.jpg" alt="Terrace">
+            <div class="theTarrace">
+                <h1 data-en="The Terrace" data-sq="Tarraca">The Terrace</h1>
+                <p data-en="An open-air oasis nestled beside the beach, offering the perfect setting to savor drinks, relax with friends, and soak up the party atmosphere all around you." data-sq="Një oaz në hapësirë të hapur e vendosur pranë plazhit, që ofron ambientin perfekt për të shijuar pijet, për t'u relaksuar me miqtë dhe për të përthithur atmosferën e festës përreth jush.">An open-air oasis nestled beside the beach, offering the perfect setting to savor drinks, relax with friends, and soak up the party atmosphere all around you.</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="dj">
+        <h1 data-en="The world's best DJs" data-sq="DJ-të më të mirë në botë">The world's best DJs</h1>
+        <p data-en="Each year artists hailing from every corner of the globe come together to create unforgettable nights at Studio 54. Many of these talented performers are featured in the top 100 DJs List, making every visit to Studio 54 a chance to witness the best in the business." data-sq="Çdo vit artistë nga çdo cep i globit bashkohen për të krijuar netë të paharrueshme në Studio 54. Shumë prej këtyre interpretuesve të talentuar janë të pranishëm në Listën e 100 DJ-ve më të mirë, duke e bërë çdo vizitë në Studio 54 një mundësi për të parë më të mirët në këtë biznes.">Each year artists hailing from every corner of the globe come together to create unforgettable nights at Studio 54. Many of these talented performers are featured in the top 100 DJs List, making every visit to Studio 54 a chance to witness the best in the business.</p>
+    </div>
+
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <img src="images/img1.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="images/img2.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides fade">
+            <img src="images/img3.jpg" style="width:100%">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <br>
+
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-column">
+            <h3 data-en="Information" data-sq="Informacione">Information</h3>
+            <ul>
+                <li><a href="club.html" data-en="About Us" data-sq="Rreth Nesh">About Us</a></li>
+                <li>
+                    <span data-en="Location" data-sq="Lokacioni">Location</span>
+                    <section class="map">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="map">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7895.485196115994!2d103.85995441789784!3d1.2880401763270322!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x7fb4e58ad9cd826e!2sSingapore+Flyer!5e0!3m2!1sen!2sth!4v1505825620371" width="100%" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </li>
+                <li><a href="https://policies.google.com/privacy?hl=en-US" data-en="Privacy Policy" data-sq="Politika e Privatësisë">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <br>
+        <div class="footer-column">
+            <h3 data-en="Contact Us" data-sq="Na Kontaktoni">Contact Us</h3>
+            <p data-en="Address: 123 Nightlife Blvd, City, Country" data-sq="Adresa: 123 Nightlife Blvd, Qyteti, Vendi">Address: 123 Nightlife Blvd, City, Country</p>
+            <p data-en="Phone: +123 456 789" data-sq="Telefoni: +123 456 789">Phone: +123 456 789</p>
+            <p data-en="Email: info@nightlife.com" data-sq="Email: info@nightlife.com">Email: info@nightlife.com</p>
+        </div>
+        <br>
+        <div class="footer-column">
+            <h3 data-en="Follow Us" data-sq="Na Ndiqni">Follow Us</h3>
+            <div class="social-icons">
+                <a href="https://www.facebook.com"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+                  </svg></a>
+                <a href="https://twitter.com"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+                    <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                  </svg></a>
+                <a href="https://www.instagram.com/?hl=en"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                  </svg></a>
+            </div>
+        </div>
+    </div>
+    <div class="dateTime"></div>
+</footer>
+
+<script>
+    // Slideshow functionality
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) { slideIndex = 1; }
+      if (n < 1) { slideIndex = slides.length; }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.opacity = "0"; 
+      }
+      slides[slideIndex - 1].style.opacity = "1";
+      dots[slideIndex - 1].className += " active";
+      
+      setTimeout(function() {
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+        }
+        slides[slideIndex - 1].style.display = "block";  
+      }, 300);
+    }
+
+    // Language switching functionality
+    const langEn = document.getElementById('langEn');
+    const langSq = document.getElementById('langSq');
+
+    // Set initial language (English)
+    let currentLanguage = 'en';
+    langEn.classList.add('active');
+
+    function switchLanguage(lang) {
+        currentLanguage = lang;
+        
+        // Update button states
+        if (lang === 'en') {
+            langEn.classList.add('active');
+            langSq.classList.remove('active');
+        } else {
+            langSq.classList.add('active');
+            langEn.classList.remove('active');
+        }
+
+        // Update all elements with data attributes
+        const elementsToTranslate = document.querySelectorAll('[data-en], [data-sq]');
+        
+        elementsToTranslate.forEach(element => {
+            if (lang === 'en') {
+                if (element.hasAttribute('data-en')) {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
+                        element.textContent = element.getAttribute('data-en');
+                    } else {
+                        element.innerHTML = element.getAttribute('data-en');
+                    }
+                }
+            } else {
+                if (element.hasAttribute('data-sq')) {
+                    if (element.tagName === 'A' || element.tagName === 'BUTTON' || element.tagName === 'SPAN') {
+                        element.textContent = element.getAttribute('data-sq');
+                    } else {
+                        element.innerHTML = element.getAttribute('data-sq');
+                    }
+                }
+            }
+        });
+
+        // Update page title
+        if (lang === 'en') {
+            document.title = 'The Club - Night Club';
+        } else {
+            document.title = 'Klubi - Night Club';
+        }
+
+        // Update HTML lang attribute
+        document.documentElement.lang = lang;
+
+        // Save preference to localStorage
+        localStorage.setItem('preferredLanguage', lang);
+    }
+
+    // Event listeners for language buttons
+    langEn.addEventListener('click', () => switchLanguage('en'));
+    langSq.addEventListener('click', () => switchLanguage('sq'));
+
+    // Load saved language preference
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedLanguage = localStorage.getItem('preferredLanguage');
+        if (savedLanguage) {
+            switchLanguage(savedLanguage);
+        }
+    });
+
+    // Date and Time functionality
+    function displayDateTime() {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toDateString();
+        const formattedTime = currentDate.toLocaleTimeString();
+        let dateTimeElement = document.querySelector('footer .dateTime');
+
+        if (!dateTimeElement) {
+            dateTimeElement = document.createElement('p');
+            dateTimeElement.classList.add('dateTime');
+            document.querySelector('footer').appendChild(dateTimeElement);
+        }
+
+        dateTimeElement.textContent = `Current Date: ${formattedDate} || Current Time: ${formattedTime}`;
+    }
+
+    displayDateTime();
+    setInterval(displayDateTime, 1000);
+</script>
+</body>
+</html>
